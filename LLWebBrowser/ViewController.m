@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "LLWebViewController.h"
 
 @interface ViewController ()
 
@@ -16,12 +17,28 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    NSArray *titles = @[@"百度",@"html"];
+    for (NSInteger i = 0; i < 2; i ++) {
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        btn.tag = i;
+        btn.frame = CGRectMake(20, 100+i*50, 60, 30);
+        btn.backgroundColor = [UIColor grayColor];
+        [btn setTitle:titles[i] forState:UIControlStateNormal];
+        [btn addTarget:self action:@selector(gotoWebBrowser:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:btn];
+    }
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)gotoWebBrowser:(UIButton *)btn{
+    LLWebViewController *webVC;
+    if (btn.tag == 0) {
+        webVC = [[LLWebViewController alloc] initWithUrl:@"http://www.baidu.com/" title:@"我的百度"];
+    }
+    else{
+        webVC = [[LLWebViewController alloc] initWithHtmlFileName:@"index1" title:@"我的html"];
+    }
+    [self.navigationController pushViewController:webVC animated:YES];
 }
 
 @end
