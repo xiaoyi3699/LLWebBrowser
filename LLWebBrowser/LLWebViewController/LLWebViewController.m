@@ -18,10 +18,11 @@ typedef enum : NSUInteger {
     NSString           *_htmlCont;
     NSURL              *_baseURL;
     NSURLRequest       *_request;
-    LLWebProgressLayer *_progressLayer;
     LLWebLoadType      _loadType;
     UIView             *_containerView;
 }
+@property (nonatomic, strong) LLWebProgressLayer *progressLayer;
+
 @end
 
 #define NAVBAR_HEIGHT  64
@@ -100,6 +101,15 @@ typedef enum : NSUInteger {
 }
 #pragma mark
 
+- (LLWebProgressLayer *)progressLayer{
+    if (!_progressLayer) {
+        _progressLayer = [[LLWebProgressLayer alloc] init];
+        _progressLayer.frame = CGRectMake(0, NAVBAR_HEIGHT-2, SCREEN_WIDTH, 2);
+        [self.navigationController.navigationBar.layer addSublayer:_progressLayer];
+    }
+    return _progressLayer;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -114,6 +124,9 @@ typedef enum : NSUInteger {
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    [_progressLayer closeTimer];
+    [_progressLayer removeFromSuperlayer];
+    _progressLayer = nil;
     self.tabBarController.tabBar.hidden = NO;
 }
 
@@ -123,10 +136,6 @@ typedef enum : NSUInteger {
     UIImage *reloaddImage = [[UIImage imageNamed:imageNamedString] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     UIBarButtonItem *loadItem = [[UIBarButtonItem alloc] initWithImage:[reloaddImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(LLRightBtnItemClick:)];
     self.navigationItem.rightBarButtonItem = loadItem;
-    
-    _progressLayer = [[LLWebProgressLayer alloc] init];
-    _progressLayer.frame = CGRectMake(0, 42, SCREEN_WIDTH, 2);
-    [self.navigationController.navigationBar.layer addSublayer:_progressLayer];
     
     _webBrowser = [[UIWebView alloc] initWithFrame:_containerView.bounds];
     _webBrowser.scalesPageToFit = YES;
@@ -157,41 +166,33 @@ typedef enum : NSUInteger {
 
 #pragma mark - 处理请求头、参数等
 - (NSURLRequest *)handlingRequest:(NSMutableURLRequest *)request{
-    //此处设置所需要的请求头格式
+    
+    //此处设置所需要的请求头格式...
     return [request copy];
 }
 
 #pragma mark - UIWebViewDelegate
 - (void)webViewDidStartLoad:(UIWebView *)webView{
-    [_progressLayer startLoad];
+    [self.progressLayer startLoad];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
     //设置从网页返回的标题
     //self.title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
-    [_progressLayer finishedLoad];
+    [self.progressLayer finishedLoad];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
     NSLog(@"请求失败：%@",error);
-    [_progressLayer finishedLoad];
+    [self.progressLayer finishedLoad];
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
-    
     NSString *requestString = [[request URL] absoluteString];
-    
     NSLog(@"拦截请求：%@",requestString);
-    
     return YES;
 }
 #pragma mark
-
-- (void)dealloc {
-    [_progressLayer closeTimer];
-    [_progressLayer removeFromSuperlayer];
-    _progressLayer = nil;
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
