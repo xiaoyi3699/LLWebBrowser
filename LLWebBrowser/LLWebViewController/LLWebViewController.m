@@ -25,7 +25,7 @@ typedef enum : NSUInteger {
 
 @end
 
-#define NAVBAR_HEIGHT  44
+#define NAVBAR_HEIGHT  64
 #define NON_NAV_HEIGHT (SCREEN_HEIGHT-NAVBAR_HEIGHT)
 #define SCREEN_WIDTH   [UIScreen mainScreen].bounds.size.width
 #define SCREEN_HEIGHT  [UIScreen mainScreen].bounds.size.height
@@ -71,7 +71,7 @@ typedef enum : NSUInteger {
     self = [super init];
     if (self) {
         _containerView = [[UIView alloc] init];
-        _containerView.frame = CGRectMake(0, 64, SCREEN_WIDTH, NON_NAV_HEIGHT);
+        _containerView.frame = CGRectMake(0, NAVBAR_HEIGHT, SCREEN_WIDTH, NON_NAV_HEIGHT);
         NSString *htmlPath = [[NSBundle mainBundle] pathForResource:htmlFileName
                                                              ofType:@"html"];
         [self setTitle:title htmlPath:htmlPath];
@@ -128,7 +128,7 @@ typedef enum : NSUInteger {
     self.navigationItem.rightBarButtonItem = loadItem;
     
     _progressLayer = [[LLWebProgressLayer alloc] init];
-    _progressLayer.frame = CGRectMake(0, NAVBAR_HEIGHT-2, SCREEN_WIDTH, 2);
+    _progressLayer.frame = CGRectMake(0, NAVBAR_HEIGHT-22, SCREEN_WIDTH, 2);
     
     _webBrowser = [[UIWebView alloc] initWithFrame:_containerView.bounds];
     _webBrowser.scalesPageToFit = YES;
