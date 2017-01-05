@@ -25,7 +25,7 @@ typedef enum : NSUInteger {
 
 @end
 
-#define NAVBAR_HEIGHT  64
+#define NAVBAR_HEIGHT  44
 #define NON_NAV_HEIGHT (SCREEN_HEIGHT-NAVBAR_HEIGHT)
 #define SCREEN_WIDTH   [UIScreen mainScreen].bounds.size.width
 #define SCREEN_HEIGHT  [UIScreen mainScreen].bounds.size.height
@@ -101,15 +101,6 @@ typedef enum : NSUInteger {
 }
 #pragma mark
 
-- (LLWebProgressLayer *)progressLayer{
-    if (!_progressLayer) {
-        _progressLayer = [[LLWebProgressLayer alloc] init];
-        _progressLayer.frame = CGRectMake(0, NAVBAR_HEIGHT-2, SCREEN_WIDTH, 2);
-        [self.navigationController.navigationBar.layer addSublayer:_progressLayer];
-    }
-    return _progressLayer;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -120,14 +111,13 @@ typedef enum : NSUInteger {
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = YES;
+    [self.navigationController.navigationBar.layer addSublayer:_progressLayer];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [_progressLayer closeTimer];
-    [_progressLayer removeFromSuperlayer];
-    _progressLayer = nil;
     self.tabBarController.tabBar.hidden = NO;
+    [_progressLayer removeFromSuperlayer];
 }
 
 - (void)createViews{
@@ -136,6 +126,9 @@ typedef enum : NSUInteger {
     UIImage *reloaddImage = [[UIImage imageNamed:imageNamedString] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     UIBarButtonItem *loadItem = [[UIBarButtonItem alloc] initWithImage:[reloaddImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(LLRightBtnItemClick:)];
     self.navigationItem.rightBarButtonItem = loadItem;
+    
+    _progressLayer = [[LLWebProgressLayer alloc] init];
+    _progressLayer.frame = CGRectMake(0, NAVBAR_HEIGHT-2, SCREEN_WIDTH, 2);
     
     _webBrowser = [[UIWebView alloc] initWithFrame:_containerView.bounds];
     _webBrowser.scalesPageToFit = YES;
@@ -173,18 +166,18 @@ typedef enum : NSUInteger {
 
 #pragma mark - UIWebViewDelegate
 - (void)webViewDidStartLoad:(UIWebView *)webView{
-    [self.progressLayer startLoad];
+    [_progressLayer startLoad];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
     //设置从网页返回的标题
     //self.title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
-    [self.progressLayer finishedLoad];
+    [_progressLayer finishedLoad];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
     NSLog(@"请求失败：%@",error);
-    [self.progressLayer finishedLoad];
+    [_progressLayer finishedLoad];
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{

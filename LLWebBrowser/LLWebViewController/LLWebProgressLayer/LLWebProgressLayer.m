@@ -35,8 +35,8 @@ static NSTimeInterval const LLFastTimeInterval = 0.01;
 
 //开始加载动画
 - (void)startLoad {
-    self.hidden = NO;
     _loadTime = 0.0;
+    [self LL_SetStrokeEnd:0];
     if (!_timer) {
         _timer = [NSTimer scheduledTimerWithTimeInterval:LLFastTimeInterval
                                                   target:self
@@ -74,13 +74,8 @@ static NSTimeInterval const LLFastTimeInterval = 0.01;
     self.strokeEnd = 1.0;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW,(int64_t)(0.25*NSEC_PER_SEC)),
                    dispatch_get_main_queue(),^{
-                       self.hidden = YES;
-                       self.strokeEnd = 0;
+                       [self LL_SetStrokeEnd:0];
                    });
-}
-
-- (void)dealloc {
-    [self closeTimer];
 }
 
 - (void)closeTimer {
@@ -88,6 +83,23 @@ static NSTimeInterval const LLFastTimeInterval = 0.01;
         [_timer invalidate];
         _timer = nil;
     }
+}
+
+//无动画
+- (void)LL_SetStrokeEnd:(CGFloat)strokeEnd{
+    if (strokeEnd < self.strokeEnd) {
+        [CATransaction begin];
+        [CATransaction setDisableActions:YES];
+        self.strokeEnd = strokeEnd;
+        [CATransaction setDisableActions:NO];
+        [CATransaction commit];
+    }
+}
+
+- (void)removeFromSuperlayer{
+    [self closeTimer];
+    [self LL_SetStrokeEnd:0];
+    [super removeFromSuperlayer];
 }
 
 @end

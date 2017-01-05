@@ -245,6 +245,7 @@
 				TargetAttributes = {
 					C6339B5A1E0B9077009D402E = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = D83H98L7Y7;
 					};
 					C6339B731E0B9077009D402E = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -459,6 +460,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = D83H98L7Y7;
 				INFOPLIST_FILE = LLWebBrowser/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.maochao.LLWebBrowser;
@@ -470,6 +472,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = D83H98L7Y7;
 				INFOPLIST_FILE = LLWebBrowser/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.maochao.LLWebBrowser;
@@ -542,6 +545,7 @@
 				C6339B8A1E0B9077009D402E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C6339B8B1E0B9077009D402E /* Build configuration list for PBXNativeTarget "LLWebBrowserTests" */ = {
 			isa = XCConfigurationList;
@@ -550,6 +554,7 @@
 				C6339B8D1E0B9077009D402E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C6339B8E1E0B9077009D402E /* Build configuration list for PBXNativeTarget "LLWebBrowserUITests" */ = {
 			isa = XCConfigurationList;
@@ -558,6 +563,7 @@
 				C6339B901E0B9077009D402E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

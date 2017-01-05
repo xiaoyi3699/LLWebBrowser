@@ -13,6 +13,5 @@
 
 - (void)startLoad;
 - (void)finishedLoad;
-- (void)closeTimer;
 
 @end
