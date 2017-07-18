@@ -245,7 +245,7 @@
 				TargetAttributes = {
 					C6339B5A1E0B9077009D402E = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = D83H98L7Y7;
+						DevelopmentTeam = N6X5V58LVJ;
 					};
 					C6339B731E0B9077009D402E = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -460,8 +460,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = D83H98L7Y7;
+				DEVELOPMENT_TEAM = N6X5V58LVJ;
 				INFOPLIST_FILE = LLWebBrowser/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.maochao.LLWebBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -472,8 +473,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = D83H98L7Y7;
+				DEVELOPMENT_TEAM = N6X5V58LVJ;
 				INFOPLIST_FILE = LLWebBrowser/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.maochao.LLWebBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
