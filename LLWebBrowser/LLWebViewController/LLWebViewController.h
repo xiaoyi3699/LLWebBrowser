@@ -1,24 +1,34 @@
 //
 //  LLWebViewController.h
-//  LLFoundation
+//  LLCommonSDK
 //
-//  Created by wangzhaomeng on 16/11/21.
-//  Copyright © 2016年 MaoChao Network Co. Ltd. All rights reserved.
+//  Created by WangZhaomeng on 2017/11/2.
+//  Copyright © 2017年 WangZhaomeng. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
+///加载方式
+typedef enum : NSInteger {
+    LLWebViewLoadTypeAuto         = 0,//iOS 8.0+使用WKWebView加载，iOS8.0之前使用UIWebView加载
+    LLWebViewLoadTypeUIWebView,       //强制使用UIWebView加载
+    LLWebViewLoadTypeWKWebView,       //强制使用WKWebView加载
+} LLWebViewLoadType;
+
 @interface LLWebViewController : UIViewController
 
-//加载普通网页
-- (id)initWithFrame:(CGRect)frame url:(NSString *)url title:(NSString *)title;
-- (id)initWithUrl:(NSString *)url title:(NSString *)title;
+@property (nonatomic, assign) LLWebViewLoadType loadType;
 
-//加载本地html页面
-- (id)initWithFrame:(CGRect)frame htmlFileName:(NSString *)htmlFileName title:(NSString *)title;
-- (id)initWithHtmlFileName:(NSString *)htmlFileName title:(NSString *)title;
+//加载网页
+- (instancetype)initWithUrl:(NSString *)url;
+- (instancetype)initWithFrame:(CGRect)frame url:(NSString *)url;
 
-//刷新
+//加载html
+- (id)initWithHtml:(NSString *)html;
+- (id)initWithFrame:(CGRect)frame html:(NSString *)html;
+
 - (void)reload;
+- (void)webGoback;
+- (void)loadUrl:(NSString *)url;
 
 @end

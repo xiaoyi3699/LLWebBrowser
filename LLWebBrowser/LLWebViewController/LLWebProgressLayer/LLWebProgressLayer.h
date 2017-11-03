@@ -6,7 +6,6 @@
 //  Copyright © 2016年 MaoChao Network Co. Ltd. All rights reserved.
 //
 
-#import <QuartzCore/QuartzCore.h>
 #import <UIKit/UIKit.h>
 
 @interface LLWebProgressLayer : CAShapeLayer

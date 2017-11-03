@@ -18,8 +18,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSArray *titles = @[@"百度",@"html"];
-    for (NSInteger i = 0; i < 2; i ++) {
+    NSArray *titles = @[@"百度",@"html",@"百度",@"html"];
+    for (NSInteger i = 0; i < 4; i ++) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         btn.tag = i;
         btn.frame = CGRectMake(20, 100+i*50, 60, 30);
@@ -33,10 +33,10 @@
 - (void)gotoWebBrowser:(UIButton *)btn{
     LLWebViewController *webVC;
     if (btn.tag == 0) {
-        webVC = [[LLWebViewController alloc] initWithUrl:@"http://www.baidu.com/" title:@"我的百度"];
+        webVC = [[LLWebViewController alloc] initWithUrl:@"http://www.baidu.com/"];
     }
     else{
-        webVC = [[LLWebViewController alloc] initWithHtmlFileName:@"index1" title:@"我的html"];
+        webVC = [[LLWebViewController alloc] initWithHtml:@"LLTest"];
     }
     [self.navigationController pushViewController:webVC animated:YES];
 }

@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		75EE59EC1FAC07450089150F /* LLTest.css in Resources */ = {isa = PBXBuildFile; fileRef = 75EE59E41FAC07450089150F /* LLTest.css */; };
+		75EE59ED1FAC07450089150F /* LLTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 75EE59E51FAC07450089150F /* LLTest.js */; };
+		75EE59EE1FAC07450089150F /* LLTest.png in Resources */ = {isa = PBXBuildFile; fileRef = 75EE59E61FAC07450089150F /* LLTest.png */; };
+		75EE59EF1FAC07450089150F /* LLTest.html in Resources */ = {isa = PBXBuildFile; fileRef = 75EE59E71FAC07450089150F /* LLTest.html */; };
+		75EE59F01FAC07450089150F /* LLWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EE59E81FAC07450089150F /* LLWebViewController.m */; };
+		75EE59F11FAC07450089150F /* LLWebProgressLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EE59EB1FAC07450089150F /* LLWebProgressLayer.m */; };
 		C6339B601E0B9077009D402E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C6339B5F1E0B9077009D402E /* main.m */; };
 		C6339B631E0B9077009D402E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C6339B621E0B9077009D402E /* AppDelegate.m */; };
 		C6339B661E0B9077009D402E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C6339B651E0B9077009D402E /* ViewController.m */; };
@@ -15,12 +21,6 @@
 		C6339B6E1E0B9077009D402E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C6339B6C1E0B9077009D402E /* LaunchScreen.storyboard */; };
 		C6339B791E0B9077009D402E /* LLWebBrowserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C6339B781E0B9077009D402E /* LLWebBrowserTests.m */; };
 		C6339B841E0B9077009D402E /* LLWebBrowserUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C6339B831E0B9077009D402E /* LLWebBrowserUITests.m */; };
-		C6339B9B1E0B908E009D402E /* index1.css in Resources */ = {isa = PBXBuildFile; fileRef = C6339B921E0B908E009D402E /* index1.css */; };
-		C6339B9C1E0B908E009D402E /* index1.html in Resources */ = {isa = PBXBuildFile; fileRef = C6339B931E0B908E009D402E /* index1.html */; };
-		C6339B9D1E0B908E009D402E /* index1.js in Resources */ = {isa = PBXBuildFile; fileRef = C6339B941E0B908E009D402E /* index1.js */; };
-		C6339B9E1E0B908E009D402E /* LLWebProgressLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = C6339B971E0B908E009D402E /* LLWebProgressLayer.m */; };
-		C6339B9F1E0B908E009D402E /* LLWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C6339B991E0B908E009D402E /* LLWebViewController.m */; };
-		C6339BA01E0B908E009D402E /* web_load_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C6339B9A1E0B908E009D402E /* web_load_icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +41,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		75EE59E21FAC07450089150F /* LLWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLWebViewController.h; sourceTree = "<group>"; };
+		75EE59E41FAC07450089150F /* LLTest.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = LLTest.css; sourceTree = "<group>"; };
+		75EE59E51FAC07450089150F /* LLTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LLTest.js; sourceTree = "<group>"; };
+		75EE59E61FAC07450089150F /* LLTest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LLTest.png; sourceTree = "<group>"; };
+		75EE59E71FAC07450089150F /* LLTest.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = LLTest.html; sourceTree = "<group>"; };
+		75EE59E81FAC07450089150F /* LLWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLWebViewController.m; sourceTree = "<group>"; };
+		75EE59EA1FAC07450089150F /* LLWebProgressLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLWebProgressLayer.h; sourceTree = "<group>"; };
+		75EE59EB1FAC07450089150F /* LLWebProgressLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLWebProgressLayer.m; sourceTree = "<group>"; };
 		C6339B5B1E0B9077009D402E /* LLWebBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LLWebBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6339B5F1E0B9077009D402E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C6339B611E0B9077009D402E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -57,14 +65,6 @@
 		C6339B7F1E0B9077009D402E /* LLWebBrowserUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LLWebBrowserUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6339B831E0B9077009D402E /* LLWebBrowserUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LLWebBrowserUITests.m; sourceTree = "<group>"; };
 		C6339B851E0B9077009D402E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C6339B921E0B908E009D402E /* index1.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = index1.css; sourceTree = "<group>"; };
-		C6339B931E0B908E009D402E /* index1.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index1.html; sourceTree = "<group>"; };
-		C6339B941E0B908E009D402E /* index1.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = index1.js; sourceTree = "<group>"; };
-		C6339B961E0B908E009D402E /* LLWebProgressLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLWebProgressLayer.h; sourceTree = "<group>"; };
-		C6339B971E0B908E009D402E /* LLWebProgressLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLWebProgressLayer.m; sourceTree = "<group>"; };
-		C6339B981E0B908E009D402E /* LLWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLWebViewController.h; sourceTree = "<group>"; };
-		C6339B991E0B908E009D402E /* LLWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLWebViewController.m; sourceTree = "<group>"; };
-		C6339B9A1E0B908E009D402E /* web_load_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = web_load_icon.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +92,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		75EE59E11FAC07450089150F /* LLWebViewController */ = {
+			isa = PBXGroup;
+			children = (
+				75EE59E21FAC07450089150F /* LLWebViewController.h */,
+				75EE59E81FAC07450089150F /* LLWebViewController.m */,
+				75EE59E31FAC07450089150F /* LLWebResouce */,
+				75EE59E91FAC07450089150F /* LLWebProgressLayer */,
+			);
+			path = LLWebViewController;
+			sourceTree = "<group>";
+		};
+		75EE59E31FAC07450089150F /* LLWebResouce */ = {
+			isa = PBXGroup;
+			children = (
+				75EE59E41FAC07450089150F /* LLTest.css */,
+				75EE59E51FAC07450089150F /* LLTest.js */,
+				75EE59E61FAC07450089150F /* LLTest.png */,
+				75EE59E71FAC07450089150F /* LLTest.html */,
+			);
+			path = LLWebResouce;
+			sourceTree = "<group>";
+		};
+		75EE59E91FAC07450089150F /* LLWebProgressLayer */ = {
+			isa = PBXGroup;
+			children = (
+				75EE59EA1FAC07450089150F /* LLWebProgressLayer.h */,
+				75EE59EB1FAC07450089150F /* LLWebProgressLayer.m */,
+			);
+			path = LLWebProgressLayer;
+			sourceTree = "<group>";
+		};
 		C6339B521E0B9077009D402E = {
 			isa = PBXGroup;
 			children = (
@@ -115,7 +146,7 @@
 		C6339B5D1E0B9077009D402E /* LLWebBrowser */ = {
 			isa = PBXGroup;
 			children = (
-				C6339B911E0B908E009D402E /* LLWebViewController */,
+				75EE59E11FAC07450089150F /* LLWebViewController */,
 				C6339B611E0B9077009D402E /* AppDelegate.h */,
 				C6339B621E0B9077009D402E /* AppDelegate.m */,
 				C6339B641E0B9077009D402E /* ViewController.h */,
@@ -153,29 +184,6 @@
 				C6339B851E0B9077009D402E /* Info.plist */,
 			);
 			path = LLWebBrowserUITests;
-			sourceTree = "<group>";
-		};
-		C6339B911E0B908E009D402E /* LLWebViewController */ = {
-			isa = PBXGroup;
-			children = (
-				C6339B921E0B908E009D402E /* index1.css */,
-				C6339B931E0B908E009D402E /* index1.html */,
-				C6339B941E0B908E009D402E /* index1.js */,
-				C6339B9A1E0B908E009D402E /* web_load_icon.png */,
-				C6339B951E0B908E009D402E /* LLWebProgressLayer */,
-				C6339B981E0B908E009D402E /* LLWebViewController.h */,
-				C6339B991E0B908E009D402E /* LLWebViewController.m */,
-			);
-			path = LLWebViewController;
-			sourceTree = "<group>";
-		};
-		C6339B951E0B908E009D402E /* LLWebProgressLayer */ = {
-			isa = PBXGroup;
-			children = (
-				C6339B961E0B908E009D402E /* LLWebProgressLayer.h */,
-				C6339B971E0B908E009D402E /* LLWebProgressLayer.m */,
-			);
-			path = LLWebProgressLayer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -282,13 +290,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75EE59EF1FAC07450089150F /* LLTest.html in Resources */,
+				75EE59ED1FAC07450089150F /* LLTest.js in Resources */,
 				C6339B6E1E0B9077009D402E /* LaunchScreen.storyboard in Resources */,
-				C6339B9C1E0B908E009D402E /* index1.html in Resources */,
+				75EE59EC1FAC07450089150F /* LLTest.css in Resources */,
 				C6339B6B1E0B9077009D402E /* Assets.xcassets in Resources */,
-				C6339B9B1E0B908E009D402E /* index1.css in Resources */,
 				C6339B691E0B9077009D402E /* Main.storyboard in Resources */,
-				C6339BA01E0B908E009D402E /* web_load_icon.png in Resources */,
-				C6339B9D1E0B908E009D402E /* index1.js in Resources */,
+				75EE59EE1FAC07450089150F /* LLTest.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,11 +321,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75EE59F11FAC07450089150F /* LLWebProgressLayer.m in Sources */,
 				C6339B661E0B9077009D402E /* ViewController.m in Sources */,
+				75EE59F01FAC07450089150F /* LLWebViewController.m in Sources */,
 				C6339B631E0B9077009D402E /* AppDelegate.m in Sources */,
 				C6339B601E0B9077009D402E /* main.m in Sources */,
-				C6339B9F1E0B908E009D402E /* LLWebViewController.m in Sources */,
-				C6339B9E1E0B908E009D402E /* LLWebProgressLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -466,6 +474,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.maochao.LLWebBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -479,6 +488,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.maochao.LLWebBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

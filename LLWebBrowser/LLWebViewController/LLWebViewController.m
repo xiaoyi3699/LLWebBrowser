@@ -1,194 +1,446 @@
 //
 //  LLWebViewController.m
-//  LLFoundation
+//  LLCommonSDK
 //
-//  Created by wangzhaomeng on 16/11/21.
-//  Copyright © 2016年 MaoChao Network Co. Ltd. All rights reserved.
+//  Created by WangZhaomeng on 2017/11/2.
+//  Copyright © 2017年 WangZhaomeng. All rights reserved.
 //
 
 #import "LLWebViewController.h"
 #import "LLWebProgressLayer.h"
+#import <WebKit/WebKit.h>
 
-typedef enum : NSUInteger {
-    LLWebLoadTypeNormal      = 0, //加载普通网页
-    LLWebLoadTypeLocalHtml,       //加载本地html
-} LLWebLoadType;
-@interface LLWebViewController ()<UIWebViewDelegate>{
-    UIWebView          *_webBrowser;
-    NSString           *_htmlCont;
-    NSURL              *_baseURL;
-    NSURLRequest       *_request;
-    LLWebLoadType      _loadType;
-    UIView             *_containerView;
-}
+@interface LLWebViewController ()<WKNavigationDelegate,WKUIDelegate,UIWebViewDelegate>
+
+@property (nonatomic, strong) WKWebView *webView_WK;
+@property (nonatomic, strong) UIWebView *webView_UI;
 @property (nonatomic, strong) LLWebProgressLayer *progressLayer;
 
 @end
 
-#define NAVBAR_HEIGHT  64
-#define NON_NAV_HEIGHT (SCREEN_HEIGHT-NAVBAR_HEIGHT)
-#define SCREEN_WIDTH   [UIScreen mainScreen].bounds.size.width
-#define SCREEN_HEIGHT  [UIScreen mainScreen].bounds.size.height
-@implementation LLWebViewController
+@implementation LLWebViewController {
+    NSString *_url;
+    BOOL     _isWKWebView;
+    CGRect   _frame;
+}
 
-#pragma mark - 加载普通网页
-/* 自定义Frame */
-- (id)initWithFrame:(CGRect)frame url:(NSString *)url title:(NSString *)title {
+#pragma mark - init
+- (instancetype)initWithUrl:(NSString *)url {
     self = [super init];
     if (self) {
-        _containerView = [[UIView alloc] initWithFrame:frame];
-        [self setTitle:title url:url];
+        _frame = LLRectBottomArea();
+        _url = url;
     }
     return self;
 }
 
-/*  默认Frame  */
-- (id)initWithUrl:(NSString *)url title:(NSString *)title {
+- (instancetype)initWithFrame:(CGRect)frame url:(NSString *)url {
     self = [super init];
     if (self) {
-        _containerView = [[UIView alloc] init];
-        _containerView.frame = CGRectMake(0, NAVBAR_HEIGHT, SCREEN_WIDTH, NON_NAV_HEIGHT);
-        [self setTitle:title url:url];
+        if (CGRectIsNull(frame)) {
+            _frame = LLRectBottomArea();
+        }
+        else {
+            _frame = frame;
+        }
+        _url = url;
     }
     return self;
 }
 
-#pragma mark - 加载本地html页面
-/* 自定义Frame */
-- (id)initWithFrame:(CGRect)frame htmlFileName:(NSString *)htmlFileName title:(NSString *)title {
+- (id)initWithHtml:(NSString *)html {
     self = [super init];
     if (self) {
-        _containerView = [[UIView alloc] initWithFrame:frame];
-        NSString *htmlPath = [[NSBundle mainBundle] pathForResource:htmlFileName
-                                                              ofType:@"html"];
-        [self setTitle:title htmlPath:htmlPath];
+        _frame = LLRectBottomArea();
+        _url = [[NSBundle mainBundle] pathForResource:html ofType:@"html"];
     }
     return self;
 }
 
-/*  默认Frame  */
-- (id)initWithHtmlFileName:(NSString *)htmlFileName title:(NSString *)title {
+- (id)initWithFrame:(CGRect)frame html:(NSString *)html {
     self = [super init];
     if (self) {
-        _containerView = [[UIView alloc] init];
-        _containerView.frame = CGRectMake(0, NAVBAR_HEIGHT, SCREEN_WIDTH, NON_NAV_HEIGHT);
-        NSString *htmlPath = [[NSBundle mainBundle] pathForResource:htmlFileName
-                                                             ofType:@"html"];
-        [self setTitle:title htmlPath:htmlPath];
+        if (CGRectIsNull(frame)) {
+            _frame = LLRectBottomArea();
+        }
+        else {
+            _frame = frame;
+        }
+        _url = [[NSBundle mainBundle] pathForResource:html ofType:@"html"];
     }
     return self;
 }
 
-#pragma mark - private 属性赋值，url、路径处理等
-- (void)setTitle:(NSString *)title url:(NSString *)url{
-    _loadType = LLWebLoadTypeNormal;
-    self.title = NSLocalizedString(title,nil);
-    
-    NSURL *URL = [NSURL URLWithString:url];
-    NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:URL];
-    _request = [self handlingRequest:request];
+#pragma mark - lazy load
+- (WKWebView *)webView_WK {
+    if (_webView_WK == nil) {
+        WKWebViewConfiguration *config = [WKWebViewConfiguration new];
+        config.preferences = [WKPreferences new];
+        config.preferences.javaScriptEnabled = YES;
+        config.preferences.javaScriptCanOpenWindowsAutomatically = YES;
+        
+        _webView_WK = [[WKWebView alloc]initWithFrame:_frame configuration:config];
+        _webView_WK.navigationDelegate = self;
+        _webView_WK.UIDelegate = self;
+        [self.view addSubview:_webView_WK];
+        
+        [self addObserver];
+    }
+    return _webView_WK;
 }
 
-- (void)setTitle:(NSString *)title htmlPath:(NSString *)htmlPath{
-    _loadType = LLWebLoadTypeLocalHtml;
-    self.title = NSLocalizedString(title,nil);
-    
-    NSString *path = [[NSBundle mainBundle] bundlePath];
-    _baseURL = [NSURL fileURLWithPath:path];
-    _htmlCont = [NSString stringWithContentsOfFile:htmlPath
-                                          encoding:NSUTF8StringEncoding
-                                             error:nil];
+- (UIWebView *)webView_UI {
+    if (_webView_UI == nil) {
+        _webView_UI = [[UIWebView alloc] initWithFrame:_frame];
+        _webView_UI.scalesPageToFit = YES;
+        _webView_UI.delegate = self;
+        [self.view addSubview:_webView_UI];
+    }
+    return _webView_UI;
 }
-#pragma mark
 
+- (LLWebProgressLayer *)progressLayer {
+    if (_progressLayer == nil) {
+        _progressLayer = [[LLWebProgressLayer alloc] init];
+        _progressLayer.frame = CGRectMake(0, 42, [UIScreen mainScreen].bounds.size.width, 2);
+    }
+    return _progressLayer;
+}
+
+#pragma mark - life cyclic
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    [self.view addSubview:_containerView];
-    [self createViews];
+    
+    if (self.loadType == LLWebViewLoadTypeAuto) {
+        _isWKWebView = ([UIDevice currentDevice].systemVersion.floatValue >= 8.0);
+    }
+    else if (self.loadType == LLWebViewLoadTypeUIWebView) {
+        _isWKWebView = NO;
+    }
+    else {
+        _isWKWebView = YES;
+    }
+    
+    [self loadUrl:_url];
 }
 
-- (void)viewWillAppear:(BOOL)animated{
+-(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.tabBarController.tabBar.hidden = YES;
-    [self.navigationController.navigationBar.layer addSublayer:_progressLayer];
+    [self.navigationController.navigationBar.layer addSublayer:self.progressLayer];
 }
 
--(void)viewWillDisappear:(BOOL)animated{
+-(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    self.tabBarController.tabBar.hidden = NO;
-    [_progressLayer removeFromSuperlayer];
+    [self.progressLayer removeFromSuperlayer];
 }
 
-- (void)createViews{
-    
-    NSString *imageNamedString = @"web_load_icon";
-    UIImage *reloaddImage = [[UIImage imageNamed:imageNamedString] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    UIBarButtonItem *loadItem = [[UIBarButtonItem alloc] initWithImage:[reloaddImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(LLRightBtnItemClick:)];
-    self.navigationItem.rightBarButtonItem = loadItem;
-    
-    _progressLayer = [[LLWebProgressLayer alloc] init];
-    _progressLayer.frame = CGRectMake(0, NAVBAR_HEIGHT-22, SCREEN_WIDTH, 2);
-    
-    _webBrowser = [[UIWebView alloc] initWithFrame:_containerView.bounds];
-    _webBrowser.scalesPageToFit = YES;
-    _webBrowser.delegate = self;
-    [_containerView addSubview:_webBrowser];
-    
-    if (_loadType == LLWebLoadTypeNormal) {
-        [_webBrowser loadRequest:_request];
+#pragma mark - public method
+- (void)loadUrl:(NSString *)url {
+    NSURLRequest *request = [self handlingUrl:_url];
+    if (_isWKWebView) {
+        [self.webView_WK loadRequest:request];
     }
-    else{
-        [_webBrowser loadHTMLString:_htmlCont baseURL:_baseURL];
+    else {
+        [self.webView_UI loadRequest:request];
     }
-}
-
-#pragma mark - 导航栏右侧刷新按钮
-- (void)LLRightBtnItemClick:(UIButton *)rightBtn{
-    [self reload];
 }
 
 - (void)reload{
-    if (_loadType == LLWebLoadTypeNormal) {
-        [_webBrowser loadRequest:_request];
+    if (_isWKWebView) {
+        [self.webView_WK reload];
     }
-    else{
-        [_webBrowser loadHTMLString:_htmlCont baseURL:_baseURL];
+    else {
+        [self.webView_UI reload];
     }
 }
 
-#pragma mark - 处理请求头、参数等
-- (NSURLRequest *)handlingRequest:(NSMutableURLRequest *)request{
+- (void)webGoback {
     
-    //此处设置所需要的请求头格式...
+    if (_isWKWebView) {
+        if (self.webView_WK.canGoBack) {
+            [self.webView_WK goBack];
+            return;
+        }
+    }
+    else {
+        if (self.webView_UI.canGoBack) {
+            [self.webView_UI goBack];
+            return;
+        }
+    }
+    if (self.navigationController.topViewController == self) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+#pragma mark - pravite method
+- (NSURLRequest *)handlingUrl:(NSString *)url {
+    NSURL *URL;
+    if ([[NSFileManager defaultManager] fileExistsAtPath:url]) {
+        URL = [NSURL fileURLWithPath:url];
+    }
+    else {
+        URL = [NSURL URLWithString:url];
+    }
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
+    return [self handlingRequest:request];
+}
+
+//处理请求头、参数等
+- (NSURLRequest *)handlingRequest:(NSMutableURLRequest *)request {
+    
     return [request copy];
 }
 
+// 添加KVO监听
+- (void)addObserver {
+    
+    [_webView_WK addObserver:self
+                  forKeyPath:@"loading"
+                     options:NSKeyValueObservingOptionNew
+                     context:nil];
+    
+    [_webView_WK addObserver:self
+                  forKeyPath:@"title"
+                     options:NSKeyValueObservingOptionNew
+                     context:nil];
+    
+    [_webView_WK addObserver:self
+                  forKeyPath:@"estimatedProgress"
+                     options:NSKeyValueObservingOptionNew
+                     context:nil];
+}
+
+// webView默认frame
+CGRect LLRectBottomArea() {
+    CGRect rect = [UIScreen mainScreen].bounds;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && rect.size.height == 812) {
+        rect.origin.y = 88;
+        rect.size.height = rect.size.height-122;
+    }
+    else {
+        rect.origin.y = 64;
+        rect.size.height = rect.size.height-64;
+    }
+    return rect;
+}
+
+// 移除KVO监听
+- (void)removeObserver {
+    [_webView_WK removeObserver:self forKeyPath:@"loading"];
+    [_webView_WK removeObserver:self forKeyPath:@"title"];
+    [_webView_WK removeObserver:self forKeyPath:@"estimatedProgress"];
+}
+
 #pragma mark - UIWebViewDelegate
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+    
+    NSString *requestString = [[request URL] absoluteString];
+    NSString *word = [requestString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    if ([word hasPrefix:@"app"]) {
+        NSString *script = [NSString stringWithFormat:@"LLAlert('%@')",word];
+        [self stringByEvaluatingJavaScriptFromString:script];
+    }
+    return YES;
+}
+
 - (void)webViewDidStartLoad:(UIWebView *)webView{
-    [_progressLayer startLoad];
+    [self.progressLayer startLoad];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
-    //设置从网页返回的标题
-    //self.title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
-    [_progressLayer finishedLoad];
+    [self.progressLayer finishedLoad];
+    self.title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
-    NSLog(@"请求失败：%@",error);
-    [_progressLayer finishedLoad];
+    [self.progressLayer finishedLoad];
 }
 
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
-    NSString *requestString = [[request URL] absoluteString];
-    NSLog(@"拦截请求：%@",requestString);
-    return YES;
+#pragma mark - KVO
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary<NSString *,id> *)change
+                       context:(void *)context
+{
+    if ([keyPath isEqualToString:@"loading"]) {
+        NSLog(@"loading...");
+    }
+    else if ([keyPath isEqualToString:@"title"]) {
+        self.title = self.webView_WK.title;
+    }
+    else if ([keyPath isEqualToString:@"estimatedProgress"]) {
+        NSLog(@"progress: %f", self.webView_WK.estimatedProgress);
+    }
+    // 加载完成
+    if (self.webView_WK.loading == NO) {
+        /*
+        //手动调用JS代码
+        [self.webView_WK evaluateJavaScript:@"" completionHandler:^(id _Nullable response, NSError * _Nullable error) {}];
+         */
+        [self.progressLayer finishedLoad];
+    }
 }
-#pragma mark
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
+#pragma mark - WKNavigationDelegate
+// 请求开始前，会先调用此代理方法
+//- (BOOL)webView:shouldStartLoadWithRequest:navigationType:
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
+    
+    NSURLRequest *request = navigationAction.request;
+    if (navigationAction.navigationType == WKNavigationTypeLinkActivated &&
+        ![request.URL.host.lowercaseString containsString:@".baidu.com"]) {
+        // 对于跨域，需要手动跳转
+        [[UIApplication sharedApplication] openURL:navigationAction.request.URL];
+        
+        // 不允许web内跳转
+        decisionHandler(WKNavigationActionPolicyCancel);
+    }
+    else {
+        NSString *word = [request.URL.absoluteString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        if ([word hasPrefix:@"app"]) {
+            NSString *script = [NSString stringWithFormat:@"LLAlert('%@')",word];
+            [self stringByEvaluatingJavaScriptFromString:script];
+        }
+        else {
+            [self.progressLayer startLoad];
+        }
+        
+        //允许web内跳转
+        decisionHandler(WKNavigationActionPolicyAllow);
+    }
+}
+
+// 在响应完成时，会回调此方法
+// 如果设置为不允许响应，web内容就不会传过来
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
+    decisionHandler(WKNavigationResponsePolicyAllow);
+}
+
+// 开始导航跳转时会回调
+- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(null_unspecified WKNavigation *)navigation {
+    
+}
+
+// 接收到重定向时会回调
+- (void)webView:(WKWebView *)webView didReceiveServerRedirectForProvisionalNavigation:(null_unspecified WKNavigation *)navigation {
+    
+}
+
+// 导航失败时会回调
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error {
+    
+}
+
+// 页面内容到达main frame时回调
+- (void)webView:(WKWebView *)webView didCommitNavigation:(null_unspecified WKNavigation *)navigation {
+    
+}
+
+// 导航完成时，会回调（也就是页面载入完成了）
+- (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation {
+    
+}
+
+// 导航失败时会回调
+- (void)webView:(WKWebView *)webView didFailNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error {
+    
+}
+
+// 对于HTTPS的都会触发此代理，如果不要求验证，传默认就行
+// 如果需要证书验证，与使用AFN进行HTTPS证书验证是一样的
+- (void)webView:(WKWebView *)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *__nullable credential))completionHandler {
+    
+    completionHandler(NSURLSessionAuthChallengePerformDefaultHandling, nil);
+}
+
+// 9.0才能使用，web内容处理中断时会触发
+- (void)webViewWebContentProcessDidTerminate:(WKWebView *)webView {
+    
+}
+
+#pragma mark - WKUIDelegate
+- (void)webViewDidClose:(WKWebView *)webView {
+    
+}
+
+// 在JS端调用alert函数时，会触发此代理方法。
+// JS端调用alert时所传的数据可以通过message拿到
+// 在原生得到结果后，需要回调JS，是通过completionHandler回调
+- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler {
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"alert" message:message preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        completionHandler();
+    }]];
+    
+    [self presentViewController:alert animated:YES completion:NULL];
+}
+
+// JS端调用confirm函数时，会触发此方法
+// 通过message可以拿到JS端所传的数据
+// 在iOS端显示原生alert得到YES/NO后
+// 通过completionHandler回调给JS端
+- (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL result))completionHandler {
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"confirm" message:message preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        completionHandler(YES);
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        completionHandler(NO);
+    }]];
+    [self presentViewController:alert animated:YES completion:NULL];
+}
+
+// JS端调用prompt函数时，会触发此方法
+// 要求输入一段文本
+// 在原生输入得到文本内容后，通过completionHandler回调给JS
+- (void)webView:(WKWebView *)webView runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(nullable NSString *)defaultText initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(NSString * __nullable result))completionHandler {
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"textinput" message:prompt preferredStyle:UIAlertControllerStyleAlert];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.textColor = [UIColor blackColor];
+    }];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        completionHandler([[alert.textFields lastObject] text]);
+    }]];
+    
+    [self presentViewController:alert animated:YES completion:NULL];
+}
+
+#pragma mark - 注入JS
+/** 以文件的方式注入JS */
+- (void)resgisterJSWithResource:(NSString *)resource ofType:(NSString *)type {
+    
+    NSBundle *bundle = [NSBundle mainBundle];
+    NSString *filePath = [bundle pathForResource:resource ofType:type];
+    NSString *script = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
+    if (_isWKWebView) {
+        [self.webView_WK evaluateJavaScript:script completionHandler:nil];
+    }
+    else {
+        [self.webView_UI stringByEvaluatingJavaScriptFromString:script];
+    }
+}
+
+/** 以字符串的方式注入JS */
+- (void)stringByEvaluatingJavaScriptFromString:(NSString *)script {
+    if (_isWKWebView) {
+        [self.webView_WK evaluateJavaScript:script completionHandler:nil];
+    }
+    else {
+        [self.webView_UI stringByEvaluatingJavaScriptFromString:script];
+    }
+}
+
+- (void)dealloc {
+    NSLog(@"webVC释放");
+    [self removeObserver];
 }
 
 @end

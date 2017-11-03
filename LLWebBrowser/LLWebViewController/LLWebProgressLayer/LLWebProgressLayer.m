@@ -9,7 +9,6 @@
 #import "LLWebProgressLayer.h"
 
 static NSTimeInterval const LLFastTimeInterval = 0.01;
-#define SCREEN_WIDTH   [UIScreen mainScreen].bounds.size.width
 
 @implementation LLWebProgressLayer{
     CAShapeLayer *_layer;
@@ -25,7 +24,7 @@ static NSTimeInterval const LLFastTimeInterval = 0.01;
         
         UIBezierPath *path = [UIBezierPath bezierPath];
         [path moveToPoint:CGPointMake(0, 2)];
-        [path addLineToPoint:CGPointMake(SCREEN_WIDTH, 2)];
+        [path addLineToPoint:CGPointMake([UIScreen mainScreen].bounds.size.width, 2)];
         
         self.path = path.CGPath;
         self.strokeEnd = 0;
@@ -35,6 +34,7 @@ static NSTimeInterval const LLFastTimeInterval = 0.01;
 
 //开始加载动画
 - (void)startLoad {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     _loadTime = 0.0;
     [self LL_SetStrokeEnd:0];
     if (!_timer) {
@@ -79,6 +79,7 @@ static NSTimeInterval const LLFastTimeInterval = 0.01;
 }
 
 - (void)closeTimer {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     if (_timer) {
         [_timer invalidate];
         _timer = nil;
