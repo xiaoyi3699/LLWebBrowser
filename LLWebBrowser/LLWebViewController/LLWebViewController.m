@@ -235,6 +235,31 @@ CGRect LLRectBottomArea() {
     [_webView_WK removeObserver:self forKeyPath:@"estimatedProgress"];
 }
 
+// KVO
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary<NSString *,id> *)change
+                       context:(void *)context
+{
+    if ([keyPath isEqualToString:@"loading"]) {
+        NSLog(@"loading...");
+    }
+    else if ([keyPath isEqualToString:@"title"]) {
+        self.title = self.webView_WK.title;
+    }
+    else if ([keyPath isEqualToString:@"estimatedProgress"]) {
+        NSLog(@"progress: %f", self.webView_WK.estimatedProgress);
+    }
+    // 加载完成
+    if (self.webView_WK.loading == NO) {
+        /*
+         //手动调用JS代码
+         [self.webView_WK evaluateJavaScript:@"" completionHandler:^(id _Nullable response, NSError * _Nullable error) {}];
+         */
+        [self.progressLayer finishedLoad];
+    }
+}
+
 #pragma mark - UIWebViewDelegate
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
     
@@ -260,31 +285,6 @@ CGRect LLRectBottomArea() {
     [self.progressLayer finishedLoad];
 }
 
-#pragma mark - KVO
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary<NSString *,id> *)change
-                       context:(void *)context
-{
-    if ([keyPath isEqualToString:@"loading"]) {
-        NSLog(@"loading...");
-    }
-    else if ([keyPath isEqualToString:@"title"]) {
-        self.title = self.webView_WK.title;
-    }
-    else if ([keyPath isEqualToString:@"estimatedProgress"]) {
-        NSLog(@"progress: %f", self.webView_WK.estimatedProgress);
-    }
-    // 加载完成
-    if (self.webView_WK.loading == NO) {
-        /*
-        //手动调用JS代码
-        [self.webView_WK evaluateJavaScript:@"" completionHandler:^(id _Nullable response, NSError * _Nullable error) {}];
-         */
-        [self.progressLayer finishedLoad];
-    }
-}
-
 #pragma mark - WKNavigationDelegate
 // 请求开始前，会先调用此代理方法
 //- (BOOL)webView:shouldStartLoadWithRequest:navigationType:
@@ -292,7 +292,7 @@ CGRect LLRectBottomArea() {
     
     NSURLRequest *request = navigationAction.request;
     if (navigationAction.navigationType == WKNavigationTypeLinkActivated &&
-        ![request.URL.host.lowercaseString containsString:@".baidu.com"]) {
+        [request.URL.host.lowercaseString containsString:@"我是跨域标识符"]) {
         // 对于跨域，需要手动跳转
         [[UIApplication sharedApplication] openURL:navigationAction.request.URL];
         
