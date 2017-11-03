@@ -363,6 +363,16 @@ CGRect LLRectBottomArea() {
 }
 
 #pragma mark - WKUIDelegate
+//需要打开新界面时
+- (WKWebView *)webView:(WKWebView *)webView createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration forNavigationAction:(WKNavigationAction *)navigationAction windowFeatures:(WKWindowFeatures *)windowFeatures {
+//会拦截到window.open()事件.
+//只需要我们在在方法内进行处理
+    if (!navigationAction.targetFrame.isMainFrame) {
+        [webView loadRequest:navigationAction.request];
+    }
+    return nil;
+}
+
 - (void)webViewDidClose:(WKWebView *)webView {
     
 }
