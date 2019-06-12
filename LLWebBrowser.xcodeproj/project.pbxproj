@@ -7,12 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		75EE59EC1FAC07450089150F /* LLTest.css in Resources */ = {isa = PBXBuildFile; fileRef = 75EE59E41FAC07450089150F /* LLTest.css */; };
-		75EE59ED1FAC07450089150F /* LLTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 75EE59E51FAC07450089150F /* LLTest.js */; };
-		75EE59EE1FAC07450089150F /* LLTest.png in Resources */ = {isa = PBXBuildFile; fileRef = 75EE59E61FAC07450089150F /* LLTest.png */; };
-		75EE59EF1FAC07450089150F /* LLTest.html in Resources */ = {isa = PBXBuildFile; fileRef = 75EE59E71FAC07450089150F /* LLTest.html */; };
-		75EE59F01FAC07450089150F /* LLWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EE59E81FAC07450089150F /* LLWebViewController.m */; };
-		75EE59F11FAC07450089150F /* LLWebProgressLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EE59EB1FAC07450089150F /* LLWebProgressLayer.m */; };
+		75CC421E22B0A5C700C2219F /* WKWebView+LLWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75CC420C22B0A5C600C2219F /* WKWebView+LLWebViewController.m */; };
+		75CC421F22B0A5C700C2219F /* UIWebView+LLWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75CC420E22B0A5C600C2219F /* UIWebView+LLWebViewController.m */; };
+		75CC422022B0A5C700C2219F /* LLWebHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 75CC421122B0A5C600C2219F /* LLWebHelper.m */; };
+		75CC422122B0A5C700C2219F /* LLTest.css in Resources */ = {isa = PBXBuildFile; fileRef = 75CC421322B0A5C600C2219F /* LLTest.css */; };
+		75CC422222B0A5C700C2219F /* LLTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 75CC421422B0A5C600C2219F /* LLTest.js */; };
+		75CC422322B0A5C700C2219F /* LLTest.png in Resources */ = {isa = PBXBuildFile; fileRef = 75CC421522B0A5C600C2219F /* LLTest.png */; };
+		75CC422422B0A5C700C2219F /* LLTest.html in Resources */ = {isa = PBXBuildFile; fileRef = 75CC421622B0A5C600C2219F /* LLTest.html */; };
+		75CC422522B0A5C700C2219F /* LLWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75CC421722B0A5C600C2219F /* LLWebViewController.m */; };
+		75CC422622B0A5C700C2219F /* LLUserContentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75CC421922B0A5C600C2219F /* LLUserContentController.m */; };
+		75CC422722B0A5C700C2219F /* LLWebProgressLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 75CC421D22B0A5C600C2219F /* LLWebProgressLayer.m */; };
 		C6339B601E0B9077009D402E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C6339B5F1E0B9077009D402E /* main.m */; };
 		C6339B631E0B9077009D402E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C6339B621E0B9077009D402E /* AppDelegate.m */; };
 		C6339B661E0B9077009D402E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C6339B651E0B9077009D402E /* ViewController.m */; };
@@ -41,14 +45,22 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		75EE59E21FAC07450089150F /* LLWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLWebViewController.h; sourceTree = "<group>"; };
-		75EE59E41FAC07450089150F /* LLTest.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = LLTest.css; sourceTree = "<group>"; };
-		75EE59E51FAC07450089150F /* LLTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LLTest.js; sourceTree = "<group>"; };
-		75EE59E61FAC07450089150F /* LLTest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LLTest.png; sourceTree = "<group>"; };
-		75EE59E71FAC07450089150F /* LLTest.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = LLTest.html; sourceTree = "<group>"; };
-		75EE59E81FAC07450089150F /* LLWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLWebViewController.m; sourceTree = "<group>"; };
-		75EE59EA1FAC07450089150F /* LLWebProgressLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLWebProgressLayer.h; sourceTree = "<group>"; };
-		75EE59EB1FAC07450089150F /* LLWebProgressLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLWebProgressLayer.m; sourceTree = "<group>"; };
+		75CC420A22B0A5C600C2219F /* LLWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLWebViewController.h; sourceTree = "<group>"; };
+		75CC420C22B0A5C600C2219F /* WKWebView+LLWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WKWebView+LLWebViewController.m"; sourceTree = "<group>"; };
+		75CC420D22B0A5C600C2219F /* LLWebHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLWebHelper.h; sourceTree = "<group>"; };
+		75CC420E22B0A5C600C2219F /* UIWebView+LLWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+LLWebViewController.m"; sourceTree = "<group>"; };
+		75CC420F22B0A5C600C2219F /* WKWebView+LLWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WKWebView+LLWebViewController.h"; sourceTree = "<group>"; };
+		75CC421022B0A5C600C2219F /* UIWebView+LLWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+LLWebViewController.h"; sourceTree = "<group>"; };
+		75CC421122B0A5C600C2219F /* LLWebHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLWebHelper.m; sourceTree = "<group>"; };
+		75CC421322B0A5C600C2219F /* LLTest.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = LLTest.css; sourceTree = "<group>"; };
+		75CC421422B0A5C600C2219F /* LLTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LLTest.js; sourceTree = "<group>"; };
+		75CC421522B0A5C600C2219F /* LLTest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LLTest.png; sourceTree = "<group>"; };
+		75CC421622B0A5C600C2219F /* LLTest.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = LLTest.html; sourceTree = "<group>"; };
+		75CC421722B0A5C600C2219F /* LLWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLWebViewController.m; sourceTree = "<group>"; };
+		75CC421922B0A5C600C2219F /* LLUserContentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLUserContentController.m; sourceTree = "<group>"; };
+		75CC421A22B0A5C600C2219F /* LLUserContentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLUserContentController.h; sourceTree = "<group>"; };
+		75CC421C22B0A5C600C2219F /* LLWebProgressLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLWebProgressLayer.h; sourceTree = "<group>"; };
+		75CC421D22B0A5C600C2219F /* LLWebProgressLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLWebProgressLayer.m; sourceTree = "<group>"; };
 		C6339B5B1E0B9077009D402E /* LLWebBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LLWebBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6339B5F1E0B9077009D402E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C6339B611E0B9077009D402E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -92,33 +104,57 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		75EE59E11FAC07450089150F /* LLWebViewController */ = {
+		75CC420922B0A5C600C2219F /* LLWebViewController */ = {
 			isa = PBXGroup;
 			children = (
-				75EE59E21FAC07450089150F /* LLWebViewController.h */,
-				75EE59E81FAC07450089150F /* LLWebViewController.m */,
-				75EE59E31FAC07450089150F /* LLWebResouce */,
-				75EE59E91FAC07450089150F /* LLWebProgressLayer */,
+				75CC420A22B0A5C600C2219F /* LLWebViewController.h */,
+				75CC421722B0A5C600C2219F /* LLWebViewController.m */,
+				75CC420B22B0A5C600C2219F /* LLWebHelper */,
+				75CC421222B0A5C600C2219F /* LLWebResouce */,
+				75CC421822B0A5C600C2219F /* LLUserContentController */,
+				75CC421B22B0A5C600C2219F /* LLWebProgressLayer */,
 			);
 			path = LLWebViewController;
 			sourceTree = "<group>";
 		};
-		75EE59E31FAC07450089150F /* LLWebResouce */ = {
+		75CC420B22B0A5C600C2219F /* LLWebHelper */ = {
 			isa = PBXGroup;
 			children = (
-				75EE59E41FAC07450089150F /* LLTest.css */,
-				75EE59E51FAC07450089150F /* LLTest.js */,
-				75EE59E61FAC07450089150F /* LLTest.png */,
-				75EE59E71FAC07450089150F /* LLTest.html */,
+				75CC420D22B0A5C600C2219F /* LLWebHelper.h */,
+				75CC421122B0A5C600C2219F /* LLWebHelper.m */,
+				75CC421022B0A5C600C2219F /* UIWebView+LLWebViewController.h */,
+				75CC420E22B0A5C600C2219F /* UIWebView+LLWebViewController.m */,
+				75CC420F22B0A5C600C2219F /* WKWebView+LLWebViewController.h */,
+				75CC420C22B0A5C600C2219F /* WKWebView+LLWebViewController.m */,
+			);
+			path = LLWebHelper;
+			sourceTree = "<group>";
+		};
+		75CC421222B0A5C600C2219F /* LLWebResouce */ = {
+			isa = PBXGroup;
+			children = (
+				75CC421322B0A5C600C2219F /* LLTest.css */,
+				75CC421422B0A5C600C2219F /* LLTest.js */,
+				75CC421522B0A5C600C2219F /* LLTest.png */,
+				75CC421622B0A5C600C2219F /* LLTest.html */,
 			);
 			path = LLWebResouce;
 			sourceTree = "<group>";
 		};
-		75EE59E91FAC07450089150F /* LLWebProgressLayer */ = {
+		75CC421822B0A5C600C2219F /* LLUserContentController */ = {
 			isa = PBXGroup;
 			children = (
-				75EE59EA1FAC07450089150F /* LLWebProgressLayer.h */,
-				75EE59EB1FAC07450089150F /* LLWebProgressLayer.m */,
+				75CC421A22B0A5C600C2219F /* LLUserContentController.h */,
+				75CC421922B0A5C600C2219F /* LLUserContentController.m */,
+			);
+			path = LLUserContentController;
+			sourceTree = "<group>";
+		};
+		75CC421B22B0A5C600C2219F /* LLWebProgressLayer */ = {
+			isa = PBXGroup;
+			children = (
+				75CC421C22B0A5C600C2219F /* LLWebProgressLayer.h */,
+				75CC421D22B0A5C600C2219F /* LLWebProgressLayer.m */,
 			);
 			path = LLWebProgressLayer;
 			sourceTree = "<group>";
@@ -146,7 +182,7 @@
 		C6339B5D1E0B9077009D402E /* LLWebBrowser */ = {
 			isa = PBXGroup;
 			children = (
-				75EE59E11FAC07450089150F /* LLWebViewController */,
+				75CC420922B0A5C600C2219F /* LLWebViewController */,
 				C6339B611E0B9077009D402E /* AppDelegate.h */,
 				C6339B621E0B9077009D402E /* AppDelegate.m */,
 				C6339B641E0B9077009D402E /* ViewController.h */,
@@ -270,6 +306,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -290,13 +327,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				75EE59EF1FAC07450089150F /* LLTest.html in Resources */,
-				75EE59ED1FAC07450089150F /* LLTest.js in Resources */,
+				75CC422422B0A5C700C2219F /* LLTest.html in Resources */,
+				75CC422222B0A5C700C2219F /* LLTest.js in Resources */,
 				C6339B6E1E0B9077009D402E /* LaunchScreen.storyboard in Resources */,
-				75EE59EC1FAC07450089150F /* LLTest.css in Resources */,
+				75CC422122B0A5C700C2219F /* LLTest.css in Resources */,
 				C6339B6B1E0B9077009D402E /* Assets.xcassets in Resources */,
 				C6339B691E0B9077009D402E /* Main.storyboard in Resources */,
-				75EE59EE1FAC07450089150F /* LLTest.png in Resources */,
+				75CC422322B0A5C700C2219F /* LLTest.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,11 +358,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				75EE59F11FAC07450089150F /* LLWebProgressLayer.m in Sources */,
+				75CC422022B0A5C700C2219F /* LLWebHelper.m in Sources */,
 				C6339B661E0B9077009D402E /* ViewController.m in Sources */,
-				75EE59F01FAC07450089150F /* LLWebViewController.m in Sources */,
+				75CC422722B0A5C700C2219F /* LLWebProgressLayer.m in Sources */,
+				75CC422622B0A5C700C2219F /* LLUserContentController.m in Sources */,
+				75CC421E22B0A5C700C2219F /* WKWebView+LLWebViewController.m in Sources */,
+				75CC422522B0A5C700C2219F /* LLWebViewController.m in Sources */,
 				C6339B631E0B9077009D402E /* AppDelegate.m in Sources */,
 				C6339B601E0B9077009D402E /* main.m in Sources */,
+				75CC421F22B0A5C700C2219F /* UIWebView+LLWebViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

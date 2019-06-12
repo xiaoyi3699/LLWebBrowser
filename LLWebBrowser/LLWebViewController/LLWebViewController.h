@@ -10,9 +10,9 @@
 
 ///加载方式
 typedef enum : NSInteger {
-    LLWebViewLoadTypeAuto         = 0,//iOS 8.0+使用WKWebView加载，iOS8.0之前使用UIWebView加载
-    LLWebViewLoadTypeUIWebView,       //强制使用UIWebView加载
-    LLWebViewLoadTypeWKWebView,       //强制使用WKWebView加载
+    LLWebViewLoadTypeAuto         = 0,
+    LLWebViewLoadTypeUIWebView,
+    LLWebViewLoadTypeWKWebView,
 } LLWebViewLoadType;
 
 @interface LLWebViewController : UIViewController
@@ -23,12 +23,16 @@ typedef enum : NSInteger {
 - (instancetype)initWithUrl:(NSString *)url;
 - (instancetype)initWithFrame:(CGRect)frame url:(NSString *)url;
 
-//加载html
+//加载本地html
 - (id)initWithHtml:(NSString *)html;
 - (id)initWithFrame:(CGRect)frame html:(NSString *)html;
 
 - (void)reload;
 - (void)webGoback;
 - (void)loadUrl:(NSString *)url;
+
+//注入JS
+- (void)stringByEvaluatingJavaScriptFromString:(NSString *)script;
+- (void)registerJSWithResource:(NSString *)resource ofType:(NSString *)type;
 
 @end
